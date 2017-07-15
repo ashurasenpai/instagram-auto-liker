@@ -2,7 +2,6 @@ import requests
 import json
 import zlib
 import time
-import requests
 from random import *
 
 
@@ -66,14 +65,16 @@ class instagram_auto_liker:
         self.__LIKE_HEADERS['x-csrftoken'] = self.__get_csrftoken()
         url = self.__LIKE_URL + post_id + '/like/'
         headers = self.__LIKE_HEADERS
-        print('Liking:', self.__LIKE_HEADERS['referer'], 'Delay', delay, 'seconds')
         requests.post(url, headers=headers)
+        print('Liked:', self.__LIKE_HEADERS['referer'])
+        print('Next in', delay, 'seconds')
         time.sleep(delay)
 
     def start(self, hashtag, amount=50, min_delay=1, max_delay=60):
         print('Starting...')
         try:
-            for i in range(0, amount):
+            for i in range(0, amount - 1):
+                print('(', i + 1, '/', amount, ')')
                 self.__like(hashtag, randint(min_delay, max_delay))
             print('Complete.')
         except Exception as e:
@@ -95,4 +96,8 @@ if __name__ == '__main__':
     while app.cookie is None:
         cookie = input('IG cookie: ')
         app.set_cookie(cookie)
-    app.start('beer', 200, 10, 20)
+    hashtag = input('Hashtag #')
+    amount = input('Amount of likes: ')
+    min_delay = input('Minimum delay(s): ')
+    max_delay = input('Maximum delay(s): ')
+    app.start(hashtag, int(amount), int(min_delay), int(max_delay))
