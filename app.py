@@ -85,7 +85,6 @@ class instagram_auto_liker:
             self.cookie = cookie
             self.__HASHTAG_PAGE_HEADERS['cookie'] = self.cookie
             self.__LIKE_HEADERS['cookie'] = self.cookie
-            print('Setting cookie to:', self.__LIKE_HEADERS['cookie'])
             print('Cookie set successfully.')
         else:
             print('Invalid cookie.')
